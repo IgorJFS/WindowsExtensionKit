@@ -1,3 +1,4 @@
+**A C# WPF desktop application that extends Windows functionality by providing advanced differential tools and utilities not available in the default operating system.**
 ### File transfer WPF project preview:
 
 instructions:
