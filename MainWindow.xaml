@@ -53,6 +53,33 @@
                     <TextBox x:Name="txtFahrenheit" Padding="5" TextChanged="txtFahrenheit_TextChanged" />
                 </StackPanel>
             </TabItem>
+
+            <!-- Terceira Aba: Video para GIF -->
+            <TabItem Header="Video para GIF">
+                <StackPanel Margin="20">
+                    <TextBlock Text="Arquivo de Vídeo:" Margin="0,5,0,2" FontWeight="SemiBold"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Name="txtVideoPath" Padding="5" />
+                        <Button Grid.Column="1" Content="..." Width="35" Margin="5,0,0,0" Click="ProcurarVideo_Click" ToolTip="Procurar vídeo" />
+                    </Grid>
+
+                    <TextBlock Text="FPS:" Margin="0,15,0,2" FontWeight="SemiBold"/>
+                    <TextBox x:Name="txtFps" Padding="5" Text="15" />
+
+                    <TextBlock Text="Scale / Resolução Máxima da largura (mantém proporção):" Margin="0,15,0,2" FontWeight="SemiBold"/>
+                    <TextBox x:Name="txtScale" Padding="5" Text="480" />
+
+                    <Button Content="Converter para GIF" Click="ConverterParaGif_Click" 
+                            Margin="0,20,0,10" Padding="8" Background="#007ACC" 
+                            Foreground="White" BorderThickness="0" Cursor="Hand" />
+
+                    <TextBlock x:Name="txtGifStatus" TextWrapping="Wrap" FontWeight="SemiBold" />
+                </StackPanel>
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>

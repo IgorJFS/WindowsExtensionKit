@@ -2,14 +2,11 @@
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Microsoft.VisualBasic.FileIO;
+using Xabe.FFmpeg;
+using Xabe.FFmpeg.Downloader;
+using System.Threading.Tasks;
 
 namespace WPF_utils;
 
@@ -21,6 +18,14 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        InitializeFFmpegAsync();
+    }
+
+    private async void InitializeFFmpegAsync()
+    {
+        // Baixa os binários do FFmpeg caso não existam no diretório
+        await FFmpegDownloader.GetLatestVersion(FFmpegVersion.Official);
+        FFmpeg.SetExecutablesPath(".");
     }
 
     // GERENCIAMENTO DE ARQUIVOS
@@ -167,5 +172,82 @@ public partial class MainWindow : Window
         txtCelsius.Text = "";
         txtFahrenheit.Text = "";
         isUpdatingTemp = false;
+    }
+
+    // VÍDEO PARA GIF
+
+    private void ProcurarVideo_Click(object sender, RoutedEventArgs e)
+    {
+        var dialog = new Microsoft.Win32.OpenFileDialog
+        {
+            Title = "Selecione o arquivo de vídeo",
+            Filter = "Video Files|*.mp4;*.avi;*.mkv;*.mov;*.wmv|All Files|*.*"
+        };
+
+        if (dialog.ShowDialog() == true)
+        {
+            txtVideoPath.Text = dialog.FileName;
+        }
+    }
+
+    private async void ConverterParaGif_Click(object sender, RoutedEventArgs e)
+    {
+        string videoPath = txtVideoPath.Text;
+        txtGifStatus.Text = string.Empty;
+
+        if (string.IsNullOrWhiteSpace(videoPath) || !File.Exists(videoPath))
+        {
+            txtGifStatus.Text = "Por favor, selecione um arquivo de vídeo válido.";
+            txtGifStatus.Foreground = Brushes.Red;
+            return;
+        }
+
+        if (!int.TryParse(txtFps.Text, out int fps) || fps <= 0)
+        {
+            txtGifStatus.Text = "Por favor, insira um valor válido para FPS.";
+            txtGifStatus.Foreground = Brushes.Red;
+            return;
+        }
+
+        if (!int.TryParse(txtScale.Text, out int scale) || scale <= 0)
+        {
+            txtGifStatus.Text = "Por favor, insira um valor válido para o Scale (largura).";
+            txtGifStatus.Foreground = Brushes.Red;
+            return;
+        }
+
+        string outputPath = System.IO.Path.ChangeExtension(videoPath, ".gif");
+
+        try
+        {
+            txtGifStatus.Text = "Convertendo... Aguarde.";
+            txtGifStatus.Foreground = Brushes.Orange;
+
+            // Se o arquivo GIF já existir, exclui-o antes de tentar converter (ou pede para sobrescrever dependendo dos parâmetros na conversão)
+            if (File.Exists(outputPath))
+            {
+                File.Delete(outputPath);
+            }
+
+            var mediaInfo = await FFmpeg.GetMediaInfo(videoPath);
+
+            // Define os argumentos personalizados para a conversão de GIF
+            string customArgs = $"-vf \"fps={fps},scale={scale}:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse\"";
+
+            var conversion = FFmpeg.Conversions.New()
+                .AddParameter($"-i \"{videoPath}\"")
+                .AddParameter(customArgs)
+                .SetOutput(outputPath);
+
+            await conversion.Start();
+
+            txtGifStatus.Text = $"Conversão concluída com sucesso!\nSalvo em: {outputPath}";
+            txtGifStatus.Foreground = Brushes.Green;
+        }
+        catch (Exception ex)
+        {
+            txtGifStatus.Text = $"Erro durante a conversão: {ex.Message}";
+            txtGifStatus.Foreground = Brushes.Red;
+        }
     }
 }
