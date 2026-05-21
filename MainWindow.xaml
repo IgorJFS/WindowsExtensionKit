@@ -5,38 +5,38 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_utils"
         mc:Ignorable="d"
-        Title="Utilitários" Height="450" Width="600"
+        Title="Utilities" Height="450" Width="600"
         Background="#F4F4F9"
         Icon="/wpf_utils.ico">
     <Grid>
         <TabControl Background="Transparent" BorderThickness="0" Margin="10">
             <!-- Primeira Aba: Organizador de Arquivos -->
-            <TabItem Header="Organizador de Arquivos">
+            <TabItem Header="File Organizer">
                 <StackPanel Margin="20">
-                    <TextBlock Text="Pasta de Origem:" Margin="0,5,0,2" FontWeight="SemiBold"/>
+                    <TextBlock Text="Source Folder:" Margin="0,5,0,2" FontWeight="SemiBold"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <TextBox x:Name="txtOrigem" Padding="5" />
-                        <Button Grid.Column="1" Content="..." Width="35" Margin="5,0,0,0" Click="ProcurarOrigem_Click" ToolTip="Procurar pasta" />
+                        <Button Grid.Column="1" Content="..." Width="35" Margin="5,0,0,0" Click="ProcurarOrigem_Click" ToolTip="Browse Folder" />
                     </Grid>
 
-                    <TextBlock Text="Extensão do Arquivo (ex: .txt, .pdf):" Margin="0,15,0,2" FontWeight="SemiBold"/>
+                    <TextBlock Text="File Extension (e.g., .txt, .pdf):" Margin="0,15,0,2" FontWeight="SemiBold"/>
                     <TextBox x:Name="txtExtensao" Padding="5" />
 
-                    <TextBlock Text="Pasta de Destino:" Margin="0,15,0,2" FontWeight="SemiBold"/>
+                    <TextBlock Text="Destination Folder:" Margin="0,15,0,2" FontWeight="SemiBold"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <TextBox x:Name="txtDestino" Padding="5" />
-                        <Button Grid.Column="1" Content="..." Width="35" Margin="5,0,0,0" Click="ProcurarDestino_Click" ToolTip="Procurar pasta" />
+                        <Button Grid.Column="1" Content="..." Width="35" Margin="5,0,0,0" Click="ProcurarDestino_Click" ToolTip="Browse Folder" />
                     </Grid>
 
-                    <Button Content="Mover Arquivos" Click="MoverArquivos_Click" 
+                    <Button Content="Move Files" Click="MoverArquivos_Click" 
                             Margin="0,20,0,10" Padding="8" Background="#007ACC" 
                             Foreground="White" BorderThickness="0" Cursor="Hand" />
 
@@ -44,7 +44,7 @@
                 </StackPanel>
             </TabItem>
 
-            <TabItem Header="Conversor Temperaturas">
+            <TabItem Header="Temperature Converter">
                 <StackPanel Margin="20">
                     <TextBlock Text="Celsius (°C):" Margin="0,5,0,2" FontWeight="SemiBold"/>
                     <TextBox x:Name="txtCelsius" Padding="5" TextChanged="txtCelsius_TextChanged" />
@@ -55,25 +55,25 @@
             </TabItem>
 
             <!-- Terceira Aba: Video para GIF -->
-            <TabItem Header="Video para GIF">
+            <TabItem Header="Video to GIF">
                 <StackPanel Margin="20">
-                    <TextBlock Text="Arquivo de Vídeo:" Margin="0,5,0,2" FontWeight="SemiBold"/>
+                    <TextBlock Text="Video File:" Margin="0,5,0,2" FontWeight="SemiBold"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <TextBox x:Name="txtVideoPath" Padding="5" />
-                        <Button Grid.Column="1" Content="..." Width="35" Margin="5,0,0,0" Click="ProcurarVideo_Click" ToolTip="Procurar vídeo" />
+                        <Button Grid.Column="1" Content="..." Width="35" Margin="5,0,0,0" Click="ProcurarVideo_Click" ToolTip="Browse Video" />
                     </Grid>
 
                     <TextBlock Text="FPS:" Margin="0,15,0,2" FontWeight="SemiBold"/>
                     <TextBox x:Name="txtFps" Padding="5" Text="15" />
 
-                    <TextBlock Text="Scale / Resolução Máxima da largura (mantém proporção):" Margin="0,15,0,2" FontWeight="SemiBold"/>
+                    <TextBlock Text="Scale / Max Width (maintains ratio):" Margin="0,15,0,2" FontWeight="SemiBold"/>
                     <TextBox x:Name="txtScale" Padding="5" Text="480" />
 
-                    <Button Content="Converter para GIF" Click="ConverterParaGif_Click" 
+                    <Button Content="Convert to GIF" Click="ConverterParaGif_Click" 
                             Margin="0,20,0,10" Padding="8" Background="#007ACC" 
                             Foreground="White" BorderThickness="0" Cursor="Hand" />
 

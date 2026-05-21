@@ -34,7 +34,7 @@ public partial class MainWindow : Window
     {
         var dialog = new Microsoft.Win32.OpenFolderDialog
         {
-            Title = "Selecione a pasta de origem"
+            Title = "Select source folder"
         };
 
         if (dialog.ShowDialog() == true)
@@ -47,7 +47,7 @@ public partial class MainWindow : Window
     {
         var dialog = new Microsoft.Win32.OpenFolderDialog
         {
-            Title = "Selecione a pasta de destino"
+            Title = "Select destination folder"
         };
 
         if (dialog.ShowDialog() == true)
@@ -66,7 +66,7 @@ public partial class MainWindow : Window
 
         if (string.IsNullOrWhiteSpace(origem) || string.IsNullOrWhiteSpace(extensao) || string.IsNullOrWhiteSpace(destino))
         {
-            txtStatus.Text = "Por favor, preencha todos os campos.";
+            txtStatus.Text = "Please fill in all fields.";
             txtStatus.Foreground = Brushes.Red;
             return;
         }
@@ -81,7 +81,7 @@ public partial class MainWindow : Window
         {
             if (!Directory.Exists(origem))
             {
-                txtStatus.Text = "A pasta de origem não existe ou é inválida.";
+                txtStatus.Text = "Source folder does not exist or is invalid.";
                 txtStatus.Foreground = Brushes.Red;
                 return;
             }
@@ -111,16 +111,16 @@ public partial class MainWindow : Window
             }
             if (contador <= 0 && contadorDuplicatas <= 0)
             {
-                txtStatus.Text = "Nenhum arquivo encontrado com a extensão especificada.";
+                txtStatus.Text = "No files found with the specified extension.";
                 txtStatus.Foreground = Brushes.Orange;
                 return;
             }
-            txtStatus.Text = $"{contador} arquivo(s) movido(s) e {contadorDuplicatas} arquivo(s) duplicado(s) movidos para a lixeira.";
+            txtStatus.Text = $"{contador} file(s) moved and {contadorDuplicatas} duplicated file(s) moved to recycle bin.";
             txtStatus.Foreground = Brushes.Green;
         }
         catch (Exception ex)
         {
-            txtStatus.Text = $"Erro ao tentar mover arquivos: {ex.Message}";
+            txtStatus.Text = $"Error trying to move files: {ex.Message}";
             txtStatus.Foreground = Brushes.Red;
         }
     }
@@ -180,7 +180,7 @@ public partial class MainWindow : Window
     {
         var dialog = new Microsoft.Win32.OpenFileDialog
         {
-            Title = "Selecione o arquivo de vídeo",
+            Title = "Select a video file",
             Filter = "Video Files|*.mp4;*.avi;*.mkv;*.mov;*.wmv|All Files|*.*"
         };
 
@@ -197,21 +197,21 @@ public partial class MainWindow : Window
 
         if (string.IsNullOrWhiteSpace(videoPath) || !File.Exists(videoPath))
         {
-            txtGifStatus.Text = "Por favor, selecione um arquivo de vídeo válido.";
+            txtGifStatus.Text = "Please select a valid video file.";
             txtGifStatus.Foreground = Brushes.Red;
             return;
         }
 
         if (!int.TryParse(txtFps.Text, out int fps) || fps <= 0)
         {
-            txtGifStatus.Text = "Por favor, insira um valor válido para FPS.";
+            txtGifStatus.Text = "Please enter a valid FPS value.";
             txtGifStatus.Foreground = Brushes.Red;
             return;
         }
 
         if (!int.TryParse(txtScale.Text, out int scale) || scale <= 0)
         {
-            txtGifStatus.Text = "Por favor, insira um valor válido para o Scale (largura).";
+            txtGifStatus.Text = "Please enter a valid scale value (width).";
             txtGifStatus.Foreground = Brushes.Red;
             return;
         }
@@ -220,7 +220,7 @@ public partial class MainWindow : Window
 
         try
         {
-            txtGifStatus.Text = "Convertendo... Aguarde.";
+            txtGifStatus.Text = "Converting... Please wait.";
             txtGifStatus.Foreground = Brushes.Orange;
 
             // Se o arquivo GIF já existir, exclui-o antes de tentar converter (ou pede para sobrescrever dependendo dos parâmetros na conversão)
@@ -241,12 +241,12 @@ public partial class MainWindow : Window
 
             await conversion.Start();
 
-            txtGifStatus.Text = $"Conversão concluída com sucesso!\nSalvo em: {outputPath}";
+            txtGifStatus.Text = $"Conversion successfully completed!\nSaved at: {outputPath}";
             txtGifStatus.Foreground = Brushes.Green;
         }
         catch (Exception ex)
         {
-            txtGifStatus.Text = $"Erro durante a conversão: {ex.Message}";
+            txtGifStatus.Text = $"Error during conversion: {ex.Message}";
             txtGifStatus.Foreground = Brushes.Red;
         }
     }
