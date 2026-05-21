@@ -19,7 +19,7 @@ Generate small `.gif` files from standard videos right on your desktop using FFm
 
 ## Preview
 
-![Project Preview GIF](https://imgur.com/a/1ez4P07)
+![Project Preview GIF](WEK.gif)
 
 ## How to execute
 
