@@ -1,17 +1,35 @@
-**A C# WPF desktop application that extends Windows functionality by providing advanced differential tools and utilities not available in the default operating system.**
-### File transfer WPF project preview:
+# WPF Utilities App
 
-instructions:
+A C# WPF desktop application that extends Windows functionality by providing tools and utilities in a clean, straightforward interface. Built with modern .NET setup, this application groups different helpful resources in a single tabbed experience.
 
-1- Origin Folder
+## Features
 
-2 - file type (.png, .jpeg, etc...)
+### 1. File Organizer
+A fast and easy way to organize messy folders. Move all files of a specific format (e.g., `.png`, `.pdf`) from a chosen *source folder* into a *destination folder* with just one click.
+* Note: Duplicate files natively are moved to the Recycle Bin instead of overwriting, preventing data loss.
 
+### 2. Temperature Converter
+A straightforward, real-time temperature converter between Celsius (°C) and Fahrenheit (°F). 
+* Note: Automatically adjusts while typing.
 
-3 - Folder you wish to transfer
+### 3. Video to GIF Converter
+Generate small `.gif` files from standard videos right on your desktop using FFmpeg. Instead of struggling with CLI commands, simply pick your video file and hit convert.
+* Adjustable options for **FPS** and **Maximum Width** mapping.
+* Operates locally — automatically downloads the official FFmpeg binaries on first startup.
 
-4 - Click to move (yes that simple) 
+## Preview
 
-OBS: it won't move duplicate files
+![Project Preview GIF](https://imgur.com/a/1ez4P07)
 
-<img width="583" height="441" alt="image" src="https://github.com/user-attachments/assets/acfa7755-0760-4494-8e7f-e7cd6f9256dc" />
+## How to execute
+
+1. Clone this repository.
+2. Open the solution in Visual Studio or your preferred IDE.
+3. Build and Run the `WPF_Utils` project.
+
+> NOTE: Make sure you have at least the **.NET Desktop Runtime** installed.
+
+## Dependencies
+
+- **[Xabe.FFmpeg](https://ffmpeg.xabe.net/)**: A great .NET wrapper for FFmpeg used in the "Video to GIF" functionality.
+- **[Xabe.FFmpeg.Downloader](https://ffmpeg.xabe.net/)**: Handles downloading the FFmpeg binaries if not locally found.
