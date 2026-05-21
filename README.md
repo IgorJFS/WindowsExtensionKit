@@ -21,15 +21,15 @@ Generate small `.gif` files from standard videos right on your desktop using FFm
 
 ![Project Preview GIF](WEK.gif)
 
-## How to execute
+## How to execute (for development)
 
 1. Clone this repository.
 2. Open the solution in Visual Studio or your preferred IDE.
 3. Build and Run the `WPF_Utils` project.
 
-> NOTE: Make sure you have at least the **.NET Desktop Runtime** installed.
+> NOTE: Make sure you have at least the **.NET Desktop Runtime** installed. If you're using just the tool itself, the necessary runtime will be included in the published version.
 
-## Dependencies
+## Dependencies (Optional)
 
 - **[Xabe.FFmpeg](https://ffmpeg.xabe.net/)**: A great .NET wrapper for FFmpeg used in the "Video to GIF" functionality.
 - **[Xabe.FFmpeg.Downloader](https://ffmpeg.xabe.net/)**: Handles downloading the FFmpeg binaries if not locally found.
