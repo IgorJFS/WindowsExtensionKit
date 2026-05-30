@@ -22,6 +22,14 @@ public partial class MainWindow : Window
         InitializeFFmpegAsync();
     }
 
+    private void AppMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (MainTabControl != null && AppMenu != null)
+        {
+            MainTabControl.SelectedIndex = AppMenu.SelectedIndex;
+        }
+    }
+
     private async void InitializeFFmpegAsync()
     {
         // Baixa os binários do FFmpeg caso não existam no diretório

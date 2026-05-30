@@ -4,110 +4,134 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_utils"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Utilities" Height="450" Width="600"
-        Background="#F4F4F9"
-        Icon="/wpf_utils.ico">
+        TextElement.Foreground="{DynamicResource AppText}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource AppBackground}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="Utilities" Height="450" Width="700"
+        Icon="wek_icon.ico">
     <Grid>
-        <TabControl Background="Transparent" BorderThickness="0" Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Sidebar -->
+        <Border Grid.Column="0" Background="{DynamicResource SidebarBackground}" Margin="0">
+            <ListBox x:Name="AppMenu" SelectionChanged="AppMenu_SelectionChanged" SelectedIndex="0" 
+                     Background="Transparent" BorderThickness="0" Margin="0,20,0,0">
+                <ListBoxItem Padding="10">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="FolderMultipleOutline" Width="24" Height="24" Margin="0,0,10,0" Foreground="{DynamicResource AppText}" />
+                        <TextBlock Text="File Organizer" FontSize="16" Foreground="{DynamicResource AppText}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </ListBoxItem>
+                <ListBoxItem Padding="10">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Thermometer" Width="24" Height="24" Margin="0,0,10,0" Foreground="{DynamicResource AppText}" />
+                        <TextBlock Text="Temp Converter" FontSize="16" Foreground="{DynamicResource AppText}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </ListBoxItem>
+                <ListBoxItem Padding="10">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="VideoOutline" Width="24" Height="24" Margin="0,0,10,0" Foreground="{DynamicResource AppText}" />
+                        <TextBlock Text="Video to GIF" FontSize="16" Foreground="{DynamicResource AppText}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </ListBoxItem>
+                <ListBoxItem Padding="10">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="ImageOutline" Width="24" Height="24" Margin="0,0,10,0" Foreground="{DynamicResource AppText}" />
+                        <TextBlock Text="Image Converter" FontSize="16" Foreground="{DynamicResource AppText}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </ListBoxItem>
+            </ListBox>
+        </Border>
+
+        <!-- Content Area -->
+        <TabControl x:Name="MainTabControl" Grid.Column="1" Background="Transparent" BorderThickness="0" Margin="10">
+            <!-- Esta TabControl terá suas abas ocultas -->
+            <TabControl.ItemContainerStyle>
+                <Style TargetType="{x:Type TabItem}">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                </Style>
+            </TabControl.ItemContainerStyle>
+
             <!-- Primeira Aba: Organizador de Arquivos -->
             <TabItem Header="File Organizer">
-                <StackPanel Margin="20">
-                    <TextBlock Text="Source Folder:" Margin="0,5,0,2" FontWeight="SemiBold"/>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBox x:Name="txtOrigem" Padding="5" />
-                        <Button Grid.Column="1" Content="..." Width="35" Margin="5,0,0,0" Click="ProcurarOrigem_Click" ToolTip="Browse Folder" />
-                    </Grid>
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="20">
+                        <TextBlock Text="File Organizer" Style="{StaticResource MaterialDesignHeadline5TextBlock}" Margin="0,0,0,20" />
 
-                    <TextBlock Text="File Extension (e.g., .txt, .pdf):" Margin="0,15,0,2" FontWeight="SemiBold"/>
-                    <TextBox x:Name="txtExtensao" Padding="5" />
+                        <TextBox x:Name="txtOrigem" materialDesign:HintAssist.Hint="Source Folder" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,15" />
+                        <Button Content="Browse..." Width="100" HorizontalAlignment="Left" Click="ProcurarOrigem_Click" Margin="0,0,0,20" Style="{StaticResource MaterialDesignOutlinedButton}" />
 
-                    <TextBlock Text="Destination Folder:" Margin="0,15,0,2" FontWeight="SemiBold"/>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBox x:Name="txtDestino" Padding="5" />
-                        <Button Grid.Column="1" Content="..." Width="35" Margin="5,0,0,0" Click="ProcurarDestino_Click" ToolTip="Browse Folder" />
-                    </Grid>
+                        <TextBox x:Name="txtExtensao" materialDesign:HintAssist.Hint="File Extension (e.g., .txt, .pdf)" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,20" />
 
-                    <Button Content="Move Files" Click="MoverArquivos_Click" 
-                            Margin="0,20,0,10" Padding="8" Background="#007ACC" 
-                            Foreground="White" BorderThickness="0" Cursor="Hand" />
+                        <TextBox x:Name="txtDestino" materialDesign:HintAssist.Hint="Destination Folder" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,15" />
+                        <Button Content="Browse..." Width="100" HorizontalAlignment="Left" Click="ProcurarDestino_Click" Margin="0,0,0,20" Style="{StaticResource MaterialDesignOutlinedButton}" />
 
-                    <TextBlock x:Name="txtStatus" TextWrapping="Wrap" FontWeight="SemiBold" />
-                </StackPanel>
+                        <Button Content="Move Files" Click="MoverArquivos_Click" Margin="0,10,0,20" Width="150" HorizontalAlignment="Left" />
+
+                        <TextBlock x:Name="txtStatus" TextWrapping="Wrap" FontWeight="SemiBold" />
+                    </StackPanel>
+                </ScrollViewer>
             </TabItem>
 
+            <!-- Segunda Aba: Conversor de Temperatura -->
             <TabItem Header="Temperature Converter">
                 <StackPanel Margin="20">
-                    <TextBlock Text="Celsius (°C):" Margin="0,5,0,2" FontWeight="SemiBold"/>
-                    <TextBox x:Name="txtCelsius" Padding="5" TextChanged="txtCelsius_TextChanged" />
+                    <TextBlock Text="Temperature Converter" Style="{StaticResource MaterialDesignHeadline5TextBlock}" Margin="0,0,0,20" />
 
-                    <TextBlock Text="Fahrenheit (°F):" Margin="0,15,0,2" FontWeight="SemiBold"/>
-                    <TextBox x:Name="txtFahrenheit" Padding="5" TextChanged="txtFahrenheit_TextChanged" />
+                    <TextBox x:Name="txtCelsius" materialDesign:HintAssist.Hint="Celsius (°C)" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,20" TextChanged="txtCelsius_TextChanged" />
+                    <TextBox x:Name="txtFahrenheit" materialDesign:HintAssist.Hint="Fahrenheit (°F)" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,20" TextChanged="txtFahrenheit_TextChanged" />
                 </StackPanel>
             </TabItem>
 
             <!-- Terceira Aba: Video para GIF -->
             <TabItem Header="Video to GIF">
-                <StackPanel Margin="20">
-                    <TextBlock Text="Video File:" Margin="0,5,0,2" FontWeight="SemiBold"/>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBox x:Name="txtVideoPath" Padding="5" />
-                        <Button Grid.Column="1" Content="..." Width="35" Margin="5,0,0,0" Click="ProcurarVideo_Click" ToolTip="Browse Video" />
-                    </Grid>
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="20">
+                        <TextBlock Text="Video to GIF" Style="{StaticResource MaterialDesignHeadline5TextBlock}" Margin="0,0,0,20" />
 
-                    <TextBlock Text="FPS:" Margin="0,15,0,2" FontWeight="SemiBold"/>
-                    <TextBox x:Name="txtFps" Padding="5" Text="15" />
+                        <TextBox x:Name="txtVideoPath" materialDesign:HintAssist.Hint="Video File" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,15" />
+                        <Button Content="Browse..." Width="100" HorizontalAlignment="Left" Click="ProcurarVideo_Click" Margin="0,0,0,20" Style="{StaticResource MaterialDesignOutlinedButton}" />
 
-                    <TextBlock Text="Scale / Max Width (maintains ratio):" Margin="0,15,0,2" FontWeight="SemiBold"/>
-                    <TextBox x:Name="txtScale" Padding="5" Text="480" />
+                        <TextBox x:Name="txtFps" materialDesign:HintAssist.Hint="FPS" Text="15" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,20" />
+                        <TextBox x:Name="txtScale" materialDesign:HintAssist.Hint="Scale / Max Width" Text="480" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,20" />
 
-                    <Button Content="Convert to GIF" Click="ConverterParaGif_Click" 
-                            Margin="0,20,0,10" Padding="8" Background="#007ACC" 
-                            Foreground="White" BorderThickness="0" Cursor="Hand" />
+                        <Button Content="Convert to GIF" Click="ConverterParaGif_Click" Margin="0,10,0,20" Width="150" HorizontalAlignment="Left" />
 
-                    <TextBlock x:Name="txtGifStatus" TextWrapping="Wrap" FontWeight="SemiBold" />
-                </StackPanel>
+                        <TextBlock x:Name="txtGifStatus" TextWrapping="Wrap" FontWeight="SemiBold" />
+                    </StackPanel>
+                </ScrollViewer>
             </TabItem>
 
             <!-- Quarta Aba: Image Converter -->
             <TabItem Header="Image Converter">
-                <StackPanel Margin="20">
-                    <TextBlock Text="Image Files (multiple allowed):" Margin="0,5,0,2" FontWeight="SemiBold"/>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBox x:Name="txtImagesPath" Padding="5" IsReadOnly="True" />
-                        <Button Grid.Column="1" Content="..." Width="35" Margin="5,0,0,0" Click="ProcurarImagens_Click" ToolTip="Browse Images" />
-                    </Grid>
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="20">
+                        <TextBlock Text="Image Converter" Style="{StaticResource MaterialDesignHeadline5TextBlock}" Margin="0,0,0,20" />
 
-                    <TextBlock Text="Output Format:" Margin="0,15,0,2" FontWeight="SemiBold"/>
-                    <ComboBox x:Name="cmbFormatoImagem" Padding="5">
-                        <ComboBoxItem Content="PNG" IsSelected="True"/>
-                        <ComboBoxItem Content="JPEG"/>
-                        <ComboBoxItem Content="WEBP"/>
-                        <ComboBoxItem Content="SVG"/>
-                    </ComboBox>
+                        <TextBox x:Name="txtImagesPath" materialDesign:HintAssist.Hint="Image Files (multiple allowed)" IsReadOnly="True" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,15" />
+                        <Button Content="Browse..." Width="100" HorizontalAlignment="Left" Click="ProcurarImagens_Click" Margin="0,0,0,20" Style="{StaticResource MaterialDesignOutlinedButton}" />
 
-                    <Button Content="Convert Images" Click="ConverterImagem_Click" 
-                            Margin="0,20,0,10" Padding="8" Background="#007ACC" 
-                            Foreground="White" BorderThickness="0" Cursor="Hand" />
+                        <ComboBox x:Name="cmbFormatoImagem" materialDesign:HintAssist.Hint="Output Format" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="0,0,0,20">
+                            <ComboBoxItem Content="PNG" IsSelected="True"/>
+                            <ComboBoxItem Content="JPEG"/>
+                            <ComboBoxItem Content="WEBP"/>
+                            <ComboBoxItem Content="SVG"/>
+                        </ComboBox>
 
-                    <TextBlock x:Name="txtImageStatus" TextWrapping="Wrap" FontWeight="SemiBold" />
-                </StackPanel>
+                        <Button Content="Convert Images" Click="ConverterImagem_Click" Margin="0,10,0,20" Width="150" HorizontalAlignment="Left" />
+
+                        <TextBlock x:Name="txtImageStatus" TextWrapping="Wrap" FontWeight="SemiBold" />
+                    </StackPanel>
+                </ScrollViewer>
             </TabItem>
         </TabControl>
     </Grid>
