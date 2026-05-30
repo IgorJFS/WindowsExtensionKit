@@ -7,6 +7,7 @@ using Microsoft.VisualBasic.FileIO;
 using Xabe.FFmpeg;
 using Xabe.FFmpeg.Downloader;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace WPF_utils;
 
@@ -231,7 +232,7 @@ public partial class MainWindow : Window
 
             var mediaInfo = await FFmpeg.GetMediaInfo(videoPath);
 
-            // Define os argumentos personalizados para a conversão de GIF
+            // Define os argumentos personalizados para a conversão de GIF com geração de paleta no mesmo comando usando o complex filter
             string customArgs = $"-vf \"fps={fps},scale={scale}:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse\"";
 
             var conversion = FFmpeg.Conversions.New()
@@ -249,5 +250,99 @@ public partial class MainWindow : Window
             txtGifStatus.Text = $"Error during conversion: {ex.Message}";
             txtGifStatus.Foreground = Brushes.Red;
         }
+    }
+
+    // CONVERSOR DE IMAGEM
+
+    private string[]? arquivosImagensSelecionados;
+
+    private void ProcurarImagens_Click(object sender, RoutedEventArgs e)
+    {
+        var dialog = new Microsoft.Win32.OpenFileDialog
+        {
+            Title = "Select images",
+            Filter = "Image Files|*.png;*.jpg;*.jpeg;*.webp;*.bmp|All Files|*.*",
+            Multiselect = true
+        };
+
+        if (dialog.ShowDialog() == true)
+        {
+            arquivosImagensSelecionados = dialog.FileNames;
+            txtImagesPath.Text = string.Join(" | ", dialog.FileNames.Select(f => System.IO.Path.GetFileName(f)));
+            txtImageStatus.Text = string.Empty;
+        }
+    }
+
+    private async void ConverterImagem_Click(object sender, RoutedEventArgs e)
+    {
+        if (arquivosImagensSelecionados == null || arquivosImagensSelecionados.Length == 0)
+        {
+            txtImageStatus.Text = "Please select at least one valid image.";
+            txtImageStatus.Foreground = Brushes.Red;
+            return;
+        }
+
+        string formatoSelecionado = cmbFormatoImagem.Text.ToLower();
+
+        txtImageStatus.Text = "Converting images... Please wait.";
+        txtImageStatus.Foreground = Brushes.Orange;
+
+        int sucesso = 0;
+        int falha = 0;
+
+        foreach (var imagePath in arquivosImagensSelecionados)
+        {
+            try
+            {
+                if (!File.Exists(imagePath)) continue;
+
+                string extension = $".{formatoSelecionado}";
+                string outputPath = System.IO.Path.ChangeExtension(imagePath, extension);
+                
+                // Impede substituição acidental de um arquivo idêntico antes de terminar
+                if (imagePath.Equals(outputPath, StringComparison.OrdinalIgnoreCase)) continue;
+
+                if (File.Exists(outputPath))
+                {
+                    File.Delete(outputPath);
+                }
+
+                var conversion = FFmpeg.Conversions.New()
+                    .AddParameter($"-i \"{imagePath}\"");
+                    
+                if (formatoSelecionado == "jpeg")
+                {
+                   conversion.AddParameter("-q:v 2"); // Define qualidade de imagem para JPEG equivalente a -qscale:v
+                }
+                
+                conversion.SetOutput(outputPath);
+
+                await conversion.Start();
+                sucesso++;
+            }
+            catch (Exception)
+            {
+                falha++;
+            }
+        }
+
+        if (falha == 0)
+        {
+            txtImageStatus.Text = $"Conversion completed! {sucesso} image(s) processed.";
+            txtImageStatus.Foreground = Brushes.Green;
+
+        }
+        else if (sucesso == 0)
+        {
+            txtImageStatus.Text = $"Conversion failed for all images.";
+            txtImageStatus.Foreground = Brushes.Red;
+        }
+        else
+        {
+            txtImageStatus.Text = $"Completed with errors. {sucesso} success(es), {falha} failure(s).";
+            txtImageStatus.Foreground = Brushes.Orange;
+        }
+        txtImagesPath.Text = string.Empty;
+        arquivosImagensSelecionados = null;
     }
 }
