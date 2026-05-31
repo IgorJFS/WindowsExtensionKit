@@ -1,0 +1,15 @@
+<UserControl x:Class="WPF_utils.Views.TempConverterControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <StackPanel Margin="20">
+        <TextBlock Text="Temperature Converter" Style="{StaticResource MaterialDesignHeadline5TextBlock}" Margin="0,0,0,20" />
+
+        <TextBox x:Name="txtCelsius" materialDesign:HintAssist.Hint="Celsius (°C)" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,20" TextChanged="txtCelsius_TextChanged" />
+        <TextBox x:Name="txtFahrenheit" materialDesign:HintAssist.Hint="Fahrenheit (°F)" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,20" TextChanged="txtFahrenheit_TextChanged" />
+    </StackPanel>
+</UserControl>
