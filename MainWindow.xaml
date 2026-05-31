@@ -50,6 +50,12 @@
                         <TextBlock Text="Image Converter" FontSize="16" Foreground="{DynamicResource AppText}" VerticalAlignment="Center" />
                     </StackPanel>
                 </ListBoxItem>
+                <ListBoxItem Padding="10">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="ConsoleLine" Width="24" Height="24" Margin="0,0,10,0" Foreground="{DynamicResource AppText}" />
+                        <TextBlock Text="Alias Manager" FontSize="16" Foreground="{DynamicResource AppText}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </ListBoxItem>
             </ListBox>
         </Border>
 
@@ -80,6 +86,11 @@
             <!-- Quarta Aba: Image Converter -->
             <TabItem Header="Image Converter">
                 <views:ImageConverterControl />
+            </TabItem>
+
+            <!-- Quinta Aba: Alias Manager -->
+            <TabItem Header="Alias Manager">
+                <views:AliasManagerControl />
             </TabItem>
         </TabControl>
     </Grid>
