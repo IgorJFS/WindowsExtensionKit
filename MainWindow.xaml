@@ -14,7 +14,7 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource AppBackground}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="Utilities" Height="450" Width="700"
+        Title="Utilities" Height="500" Width="850"
         Icon="wek_icon.ico">
     <Grid>
         <Grid.ColumnDefinitions>
