@@ -2,6 +2,10 @@
 
 A C# WPF desktop application that extends Windows functionality by providing tools and utilities in a clean, straightforward interface. Built with modern .NET setup, this application groups different helpful resources in a single tabbed experience.
 
+## Preview
+
+![Project Preview GIF](WEK.gif)
+
 ## Features
 
 ### 1. File Organizer
@@ -16,10 +20,6 @@ A straightforward, real-time temperature converter between Celsius (°C) and Fah
 Generate small `.gif` files from standard videos right on your desktop using FFmpeg. Instead of struggling with CLI commands, simply pick your video file and hit convert.
 * Adjustable options for **FPS** and **Maximum Width** mapping.
 * Operates locally — automatically downloads the official FFmpeg binaries on first startup.
-
-## Preview
-
-![Project Preview GIF](WEK.gif)
 
 ## How to execute (for development)
 
